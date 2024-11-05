@@ -12,6 +12,7 @@ struct ikan
     string jenisIkan;
     int umurIkan;
     int hargaIkan;
+    string pakanIkan;
     ikan *next;
 };
 
@@ -56,20 +57,20 @@ int main()
     do
     {
         cout << "=========================================" << endl;
-           std::cout << "               __," << std::endl;
-    std::cout << "               .-'_-'`" << std::endl;
-    std::cout << "             .' {`" << std::endl;
-    std::cout << "         .-'````'-.    .-'``'." << std::endl;
-    std::cout << "       .'(0)       '._/ _.-.  `\\" << std::endl;
-    std::cout << "      }     '. ))    _<`    )`  |" << std::endl;
-    std::cout << "       `-.,\\'.\\_,.-\\` \\`---; .' /" << std::endl;
-    std::cout << "            )  )       '-.  '--:" << std::endl;
-    std::cout << "           ( ' (          ) '.  \\" << std::endl;
-    std::cout << "            '.  )      .'(   /   )" << std::endl;
-    std::cout << "              )/      (   '.    /" << std::endl;
-    std::cout << "                       '._( ) .'" << std::endl;
-    std::cout << "                           ( (" << std::endl;
-    std::cout << "                            `-." << std::endl;
+        cout << "               __," << endl;
+        cout << "               .-'_-'`" << endl;
+        cout << "             .' {`" << endl;
+        cout << "         .-'````'-.    .-'``'." << endl;
+        cout << "       .'(0)       '._/ _.-.  `\\" << endl;
+        cout << "      }     '. ))    _<`    )`  |" << endl;
+        cout << "       `-.,\\'.\\_,.-\\` \\`---; .' /" << endl;
+        cout << "            )  )       '-.  '--:" << endl;
+        cout << "           ( ' (          ) '.  \\" << endl;
+        cout << "            '.  )      .'(   /   )" << endl;
+        cout << "              )/      (   '.    /" << endl;
+        cout << "                       '._( ) .'" << endl;
+        cout << "                           ( (" << endl;
+        cout << "                            `-." << endl;
         cout << "=========================================" << endl;
         cout << "           MENU YAPS RAJA IKAN HIAS" << endl;
         cout << "\t1. Tambah Ikan (Stack / Queue)" << endl;
