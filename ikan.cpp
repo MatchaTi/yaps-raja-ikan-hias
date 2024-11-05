@@ -294,7 +294,7 @@ void tambahIkan(ikan **head)
 
 void tampilkanIkan(ikan *head)
 {
-    int selectedIndex = 0; // Indeks pilihan menu
+    int selectedIndex = 0;
     char key;
 
     cout << "           == Tampilkan Ikan ==" << endl;
@@ -325,22 +325,21 @@ void tampilkanIkan(ikan *head)
 
         key = _getch();
 
-        // Navigasi menu utama
-        if (key == 72 && selectedIndex > 0) // Panah atas
+        if (key == 72 && selectedIndex > 0)
         {
             selectedIndex--;
         }
-        else if (key == 80 && selectedIndex < 2) // Panah bawah
+        else if (key == 80 && selectedIndex < 2)
         {
             selectedIndex++;
         }
-        else if (key == '\r') // Tombol Enter
+        else if (key == '\r')
         {
             system("cls || clear");
-            if (selectedIndex == 0) // Semua Ikan
+            if (selectedIndex == 0)
             {
                 ikan *temp = head;
-                selectedIndex = 0; // Reset untuk memilih ikan
+                selectedIndex = 0;
 
                 while (true)
                 {
@@ -353,42 +352,39 @@ void tampilkanIkan(ikan *head)
                     temp = head;
                     int index = 0;
 
-                    // Tampilkan semua ikan
                     while (temp != nullptr)
                     {
                         if (index == selectedIndex)
                         {
-                            color(12); // Merah jika terpilih
+                            color(12);
                         }
                         else
                         {
-                            color(7); // Putih jika tidak terpilih
+                            color(7);
                         }
                         cout << temp->idIkan << "\t" << temp->jenisIkan << "\t" << temp->umurIkan
                              << "\t" << temp->hargaIkan << "\t" << "\n";
-                        temp = temp->next; // Pindah ke ikan berikutnya
+                        temp = temp->next;
                         index++;
                     }
 
                     color(7);
                     key = _getch();
-                    if (key == 72 && selectedIndex > 0) // Panah atas
+                    if (key == 72 && selectedIndex > 0)
                     {
                         selectedIndex--;
                     }
-                    else if (key == 80 && selectedIndex < index - 1) // Panah bawah
+                    else if (key == 80 && selectedIndex < index - 1)
                     {
                         selectedIndex++;
                     }
-                    else if (key == '\r') // Tombol Enter
+                    else if (key == '\r')
                     {
-                        // Menampilkan detail ikan yang dipilih
                         temp = head;
                         for (int i = 0; i < selectedIndex; i++)
                         {
-                            temp = temp->next; // Pindah ke ikan yang dipilih
+                            temp = temp->next;
                         }
-                        // Tampilkan detail ikan
                         system("cls || clear");
                         cout << "Detail Ikan yang Dipilih:" << endl;
                         cout << "=========================================" << endl;
@@ -397,16 +393,16 @@ void tampilkanIkan(ikan *head)
                         cout << "Umur Ikan \t: " << temp->umurIkan << " Bulan" << endl;
                         cout << "Harga Ikan \t: Rp. " << fixed << setprecision(2) << temp->hargaIkan << endl;
                         cout << "====================================" << endl;
-                        system("pause"); // Pause untuk menampilkan informasi
-                        break;           // Kembali setelah menampilkan detail
+                        system("pause");
+                        break;
                     }
-                    else if (key == 27) // Escape
+                    else if (key == 27)
                     {
-                        break; // Keluar dari pemilihan ikan
+                        break;
                     }
                 }
             }
-            else if (selectedIndex == 1) // Peek Ikan
+            else if (selectedIndex == 1)
             {
                 if (head != NULL)
                 {
@@ -422,14 +418,13 @@ void tampilkanIkan(ikan *head)
                 }
                 system("pause");
             }
-            else if (selectedIndex == 2) // Kembali ke Menu Utama
+            else if (selectedIndex == 2)
             {
-                break; // Kembali ke menu utama
+                break;
             }
             system("cls || clear");
         }
 
-        // Menampilkan kembali menu utama
         gotoxy(0, 4);
         color(selectedIndex == 0 ? 12 : 7);
         cout << "1. Semua Ikan" << endl;
