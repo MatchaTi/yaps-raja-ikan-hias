@@ -31,11 +31,12 @@ void tampilkanIkan(ikan *head);
 void display(ikan *head, int *counter);
 bool isEmpty(ikan *head);
 int editIkan(ikan *head);
+int hapusIkan(ikan **head);
 
 int main()
 {
     system("cls || clear");
-    ikan *linkedListIkan = NULL;
+    ikan *linkedListIkan = nullptr;
     int status;
     int pilihan;
     float keyHarga;
@@ -83,7 +84,6 @@ int main()
                 break;
             case 2:
                 system("cls || clear");
-                int status;
                 status = editIkan(linkedListIkan);
                 if (status == -1)
                 {
@@ -104,7 +104,12 @@ int main()
                 break;
             case 3:
                 system("cls || clear");
-                cout << "Hapus Ikan";
+                status = hapusIkan(&linkedListIkan);
+                if (status == 1)
+                {
+                    cout << "Ikan berhasil dihapus (Mode Stack - Pop)." << endl;
+                }
+                system("pause");
                 break;
             case 4:
                 system("cls || clear");
@@ -562,3 +567,19 @@ int editIkan(ikan *head)
         }
     }
 };
+
+int hapusIkan(ikan **head)
+{
+    ikan *temp = *head;
+    ikan *prev = NULL;
+
+    if (*head == NULL)
+    {
+        cout << "Data ikan masih kosong cuy" << endl;
+        return -1;
+    }
+
+    *head = (*head)->next;
+    delete temp;
+    return 1;
+}
