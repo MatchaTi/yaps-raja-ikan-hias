@@ -30,6 +30,7 @@ void tambahIkan(ikan **head);
 void tampilkanIkan(ikan *head);
 void display(ikan *head, int *counter);
 bool isEmpty(ikan *head);
+int editIkan(ikan *head);
 
 int main()
 {
@@ -82,7 +83,24 @@ int main()
                 break;
             case 2:
                 system("cls || clear");
-                cout << "Edit Ikan";
+                int status;
+                status = editIkan(linkedListIkan);
+                if (status == -1)
+                {
+                    cout << "Ikan tidak ditemukan" << endl;
+                    cout << "Tekan tombol apapun untuk kembali ke menu utama" << endl;
+                    cin.get();
+                    system("cls || clear");
+                }
+                else if (status == -2)
+                    system("cls || clear");
+                else
+                {
+                    cout << "Ikan berhasil diubah" << endl;
+                    system("pause");
+                    system("cls || clear");
+                }
+                system("cls || clear");
                 break;
             case 3:
                 system("cls || clear");
@@ -125,6 +143,8 @@ int main()
 
         Set[counter] = 12;
 
+        system("cls || clear");
+        displayGambarIkan();
         displayMenu(Set, menuCount);
     }
 
@@ -150,7 +170,7 @@ void displayMenu(int Set[], int menuCount)
     string menu[] = {
         "1. Tambah Ikan (Stack)",
         "2. Tampilkan Ikan",
-        "3. Edit Ikan (Stack)",
+        "3. Edit Ikan",
         "4. Hapus Ikan (Pop)",
         "5. Tambah Karyawan (Queue)",
         "6. Pecat Karyawan (Dequeue)",
@@ -456,3 +476,89 @@ bool isEmpty(ikan *head)
 {
     return head == NULL;
 }
+
+int editIkan(ikan *head)
+{
+    cout << "   == Pilih Ikan untuk Di-Edit ==" << endl;
+    cout << "====================================" << endl;
+    if (head == NULL)
+    {
+        cout << "Data ikan masih kosong" << endl;
+        return -2;
+    }
+    else
+    {
+        ikan *temp = head;
+        int selectedIndex = 0;
+        char key;
+
+        while (true)
+        {
+            system("cls || clear");
+            cout << "   == Pilih Ikan untuk Di-Edit ==" << endl;
+            cout << "====================================" << endl;
+            gotoxy(0, 2);
+
+            cout << "ID\tJenis\tUmur\tHarga\tPakan\n";
+            cout << "-------------------------------------\n";
+
+            temp = head;
+            int index = 0;
+
+            while (temp != nullptr)
+            {
+                if (index == selectedIndex)
+                {
+                    color(12);
+                }
+                else
+                {
+                    color(7);
+                }
+                cout << temp->idIkan << "\t" << temp->jenisIkan << "\t" << temp->umurIkan
+                     << "\t" << temp->hargaIkan << "\t" << "\n";
+                temp = temp->next;
+                index++;
+            }
+
+            color(7);
+            key = _getch();
+            if (key == 72 && selectedIndex > 0)
+            {
+                selectedIndex--;
+            }
+            else if (key == 80 && selectedIndex < index - 1)
+            {
+                selectedIndex++;
+            }
+            else if (key == '\r')
+            {
+                temp = head;
+                for (int i = 0; i < selectedIndex; i++)
+                {
+                    temp = temp->next;
+                }
+                system("cls || clear");
+                cout << "Detail Ikan yang Dipilih:" << endl;
+                cout << "=========================================" << endl;
+                cout << "ID Ikan \t: " << temp->idIkan << endl;
+                cout << "Nama Ikan \t: " << temp->jenisIkan << endl;
+                cout << "Umur Ikan \t: " << temp->umurIkan << " Bulan" << endl;
+                cout << "Harga Ikan \t: Rp. " << fixed << setprecision(2) << temp->hargaIkan << endl;
+                cout << "====================================" << endl;
+
+                temp->jenisIkan = getStringInput("Nama ikan \t\t: ");
+                temp->umurIkan = getIntInput("Umur ikan (Bulan)\t: ");
+                temp->hargaIkan = getIntInput("Harga ikan \t\t: Rp. ");
+                return 1;
+                system("pause");
+                break;
+            }
+            else if (key == 27)
+            {
+                return -2;
+                break;
+            }
+        }
+    }
+};
