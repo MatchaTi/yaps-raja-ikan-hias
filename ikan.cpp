@@ -136,15 +136,17 @@ int main()
                 break;
             case 6:
                 system("cls || clear");
-                cout << "Merge Sort Harga Ikan (ASC)" << endl
-                     << endl;
                 mergeSort(&linkedListIkan, compareByHarga);
+                cout << "Data ikan berhasil diurutkan secara Ascending menggunakan Merge Sort" << endl
+                     << endl;
                 tampilkanIkan(linkedListIkan);
-                cout << "Data ikan berhasil diurutkan secara Ascending menggunakan Merge Sort" << endl;
                 break;
             case 7:
                 system("cls || clear");
-                cout << "Shell Sort Harga Ikan (DSC)";
+                cout << "Data ikan berhasil diurutkan secara Descending menggunakan Shell Sort" << endl
+                     << endl;
+                shellSort(&linkedListIkan, compareByHargaDescending);
+                tampilkanIkan(linkedListIkan);
                 break;
             case 8:
                 system("cls || clear");
