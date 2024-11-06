@@ -19,6 +19,14 @@ struct ikan
     ikan *next;
 };
 
+struct karayawan
+{
+    int idKarayawan;
+    string namaKarayawan;
+    int umurKarayawan;
+    karayawan *next;
+};
+
 void color(int color);
 void gotoxy(int x, int y);
 void displayMenu(int Set[], int menuCount);
