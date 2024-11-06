@@ -59,8 +59,8 @@ int main()
     int keyUmur;
     string pattern;
 
-    const int menuCount = 12;
-    int Set[menuCount] = {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
+    const int menuCount = 13;
+    int Set[menuCount] = {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
     int counter = 0;
     char key;
 
@@ -132,23 +132,27 @@ int main()
                 break;
             case 5:
                 system("cls || clear");
-                cout << "Pecat Karyawan";
+                cout << "Lihat Karyawan";
                 break;
             case 6:
+                system("cls || clear");
+                cout << "Pecat Karyawan";
+                break;
+            case 7:
                 system("cls || clear");
                 mergeSort(&linkedListIkan, compareByHarga);
                 cout << "Data ikan berhasil diurutkan secara Ascending menggunakan Merge Sort" << endl
                      << endl;
                 tampilkanIkan(linkedListIkan);
                 break;
-            case 7:
+            case 8:
                 system("cls || clear");
                 cout << "Data ikan berhasil diurutkan secara Descending menggunakan Shell Sort" << endl
                      << endl;
                 shellSort(&linkedListIkan, compareByHargaDescending);
                 tampilkanIkan(linkedListIkan);
                 break;
-            case 8:
+            case 9:
                 system("cls || clear");
                 cout << " == PROGRAM SEARCH FIBONACCI HARGA IKAN ==" << endl;
                 cout << "=========================================" << endl;
@@ -167,7 +171,7 @@ int main()
                     system("pause");
                     break;
                 }
-            case 9:
+            case 10:
                 system("cls || clear");
                 cout << " == PROGRAM SEARCH JUMP UMUR IKAN ==" << endl;
                 cout << "=========================================" << endl;
@@ -186,7 +190,7 @@ int main()
                     system("pause");
                     break;
                 }
-            case 10:
+            case 11:
                 system("cls || clear");
                 cout << " == PROGRAM SEARCH BOYER-MOORE NAMA IKAN ==" << endl;
                 cout << "=========================================" << endl;
@@ -243,13 +247,14 @@ void displayMenu(int Set[], int menuCount)
         "3. Edit Ikan",
         "4. Hapus Ikan (Pop)",
         "5. Tambah Karyawan (Queue)",
-        "6. Pecat Karyawan (Dequeue)",
-        "7. Merge Sort Harga Ikan (ASC)",
-        "8. Shell Sort Harga Ikan (DSC)",
-        "9. Search Fibonacci (Harga Ikan)",
-        "10. Search Jump (Umur Ikan)",
-        "11. Search Boyer-Moore (Nama Ikan)",
-        "12. Keluar Program"};
+        "6. Lihat Karayawan",
+        "7. Pecat Karyawan (Dequeue)",
+        "8. Merge Sort Harga Ikan (ASC)",
+        "9. Shell Sort Harga Ikan (DSC)",
+        "10. Search Fibonacci (Harga Ikan)",
+        "11. Search Jump (Umur Ikan)",
+        "12. Search Boyer-Moore (Nama Ikan)",
+        "13. Keluar Program"};
 
     for (int i = 0; i < menuCount; i++)
     {
@@ -840,10 +845,13 @@ void fibonacciSearchExact(ikan *head, float keyHarga)
                 ikan *previousIkan = getNodeAt(head, backwardIndex);
                 if (previousIkan->hargaIkan == keyHarga)
                 {
-                    cout << "ID: " << previousIkan->idIkan
-                         << ", Nama: " << previousIkan->jenisIkan
-                         << ", Umur: " << previousIkan->umurIkan
-                         << ", Harga: " << previousIkan->hargaIkan << endl;
+                    cout << "\nDetail Ikan yang ditemukan:" << endl;
+                    cout << "=========================================" << endl;
+                    cout << "ID Ikan \t: " << previousIkan->idIkan << endl;
+                    cout << "Nama Ikan \t: " << previousIkan->jenisIkan << endl;
+                    cout << "Umur Ikan \t: " << previousIkan->umurIkan << " Bulan" << endl;
+                    cout << "Harga Ikan \t: Rp. " << fixed << setprecision(2) << previousIkan->hargaIkan << endl;
+                    cout << "====================================" << endl;
                 }
                 else
                 {
@@ -858,10 +866,13 @@ void fibonacciSearchExact(ikan *head, float keyHarga)
                 ikan *nextIkan = getNodeAt(head, forwardIndex);
                 if (nextIkan->hargaIkan == keyHarga)
                 {
-                    cout << "ID: " << nextIkan->idIkan
-                         << ", Nama: " << nextIkan->jenisIkan
-                         << ", Umur: " << nextIkan->umurIkan
-                         << ", Harga: " << nextIkan->hargaIkan << endl;
+                    cout << "Detail Ikan yang ditemukan:" << endl;
+                    cout << "=========================================" << endl;
+                    cout << "ID Ikan \t: " << nextIkan->idIkan << endl;
+                    cout << "Nama Ikan \t: " << nextIkan->jenisIkan << endl;
+                    cout << "Umur Ikan \t: " << nextIkan->umurIkan << " Bulan" << endl;
+                    cout << "Harga Ikan \t: Rp. " << fixed << setprecision(2) << nextIkan->hargaIkan << endl;
+                    cout << "====================================" << endl;
                 }
                 else
                 {
@@ -878,10 +889,13 @@ void fibonacciSearchExact(ikan *head, float keyHarga)
     {
         ikan *lastIkan = getNodeAt(head, offset + 1);
         cout << "\nIkan dengan harga " << keyHarga << " ditemukan:" << endl;
-        cout << "ID: " << lastIkan->idIkan
-             << ", Nama: " << lastIkan->jenisIkan
-             << ", Umur: " << lastIkan->umurIkan
-             << ", Harga: " << lastIkan->hargaIkan << endl;
+        cout << "Detail Ikan yang ditemukan:" << endl;
+        cout << "=========================================" << endl;
+        cout << "ID Ikan \t: " << lastIkan->idIkan << endl;
+        cout << "Nama Ikan \t: " << lastIkan->jenisIkan << endl;
+        cout << "Umur Ikan \t: " << lastIkan->umurIkan << " Bulan" << endl;
+        cout << "Harga Ikan \t: Rp. " << fixed << setprecision(2) << lastIkan->hargaIkan << endl;
+        cout << "====================================" << endl;
     }
     else
     {
@@ -921,12 +935,13 @@ void jumpSearchByUmur(ikan *head, int keyUmur)
         ikan *foundIkan = getNodeAt(head, prev);
         if (foundIDs.find(foundIkan->idIkan) == foundIDs.end())
         {
-            cout << "Ikan dengan umur " << keyUmur << " ditemukan:" << endl;
             foundIDs.insert(foundIkan->idIkan);
-            cout << "ID: " << foundIkan->idIkan
-                 << ", Nama: " << foundIkan->jenisIkan
-                 << ", Umur: " << foundIkan->umurIkan
-                 << ", Harga: " << foundIkan->hargaIkan << endl;
+            cout << "\nDetail Ikan yang ditemukan:" << endl;
+            cout << "=========================================" << endl;
+            cout << "ID Ikan \t: " << foundIkan->idIkan << endl;
+            cout << "Nama Ikan \t: " << foundIkan->jenisIkan << endl;
+            cout << "Umur Ikan \t: " << foundIkan->umurIkan << " Bulan" << endl;
+            cout << "Harga Ikan \t: Rp. " << fixed << setprecision(2) << foundIkan->hargaIkan << endl;
             cout << "====================================" << endl;
         }
     }
