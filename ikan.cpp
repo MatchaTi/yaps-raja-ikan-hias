@@ -150,7 +150,12 @@ int main()
                 break;
             case 8:
                 system("cls || clear");
-                cout << "Search Fibonacci (Harga Ikan)";
+                cout << " == PROGRAM SEARCH FIBONACCI HARGA IKAN ==" << endl;
+                cout << "=========================================" << endl;
+                mergeSort(&linkedListIkan, compareByHarga);
+                keyHarga = getFloatInput("Masukkan harga ikan yang ingin dicari : ");
+                fibonacciSearchExact(linkedListIkan, keyHarga);
+                system("pause");
                 break;
             case 9:
                 system("cls || clear");
