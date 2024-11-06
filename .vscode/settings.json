@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.embeddedhtml": "html",
+    "*.mdx": "markdown",
+    "ostream": "cpp"
+  }
+}

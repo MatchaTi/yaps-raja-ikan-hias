@@ -188,8 +188,22 @@ int main()
                 }
             case 10:
                 system("cls || clear");
-                cout << "Search Boyer-Moore (Nama Ikan)";
-                break;
+                cout << " == PROGRAM SEARCH BOYER-MOORE NAMA IKAN ==" << endl;
+                cout << "=========================================" << endl;
+                if (linkedListIkan == NULL)
+                {
+                    cout << "Data ikan masih kosong" << endl;
+                    system("pause");
+                    system("cls || clear");
+                    break;
+                }
+                else
+                {
+                    pattern = getStringInput("Masukkan nama ikan yang ingin dicari : ");
+                    boyerMooreSearch(linkedListIkan, pattern);
+                    system("pause");
+                    break;
+                }
             }
             if (counter == menuCount - 1)
             {
@@ -979,13 +993,15 @@ void boyerMooreSearch(ikan *head, string pattern)
 
             if (j < 0)
             {
-                cout << "Ikan dengan nama \"" << pattern << "\" ditemukan:" << endl;
-                cout << "ID: " << current->idIkan
-                     << ", Nama: " << current->jenisIkan
-                     << ", Umur: " << current->umurIkan
-                     << ", Harga: " << current->hargaIkan << endl;
-
+                cout << "\nIkan dengan nama \"" << pattern << "\" ditemukan:" << endl;
+                cout << "=========================================" << endl;
+                cout << "ID Ikan \t: " << current->idIkan << endl;
+                cout << "Nama Ikan \t: " << current->jenisIkan << endl;
+                cout << "Umur Ikan \t: " << current->umurIkan << " Bulan" << endl;
+                cout << "Harga Ikan \t: Rp. " << fixed << setprecision(2) << current->hargaIkan << endl;
+                cout << "====================================" << endl;
                 s += (s + m < n) ? m - badChar[name[s + m]] : 1;
+                return;
             }
             else
             {
@@ -996,4 +1012,6 @@ void boyerMooreSearch(ikan *head, string pattern)
         current = current->next;
         id++;
     }
+
+    cout << "Ikan dengan nama \"" << pattern << "\" tidak ditemukan." << endl;
 }
