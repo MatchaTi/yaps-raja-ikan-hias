@@ -32,6 +32,22 @@ void display(ikan *head, int *counter);
 bool isEmpty(ikan *head);
 int editIkan(ikan *head);
 int hapusIkan(ikan **head);
+bool compareByHargaDescending(ikan *a, ikan *b);
+bool compareByBeratDescending(ikan *a, ikan *b);
+bool compareByUmurDescending(ikan *a, ikan *b);
+void shellSort(ikan **headRef, bool (*compare)(ikan *, ikan *));
+int getLength(ikan *head);
+ikan *getNodeAt(ikan *head, int index);
+void mergeSort(ikan **headRef, bool (*compare)(ikan *, ikan *));
+void mergeSortedLists(ikan *list1, ikan *list2, ikan **headRef, bool (*compare)(ikan *, ikan *));
+void splitList(ikan *source, ikan **front, ikan **back);
+bool compareByHarga(ikan *a, ikan *b);
+bool compareByBerat(ikan *a, ikan *b);
+bool compareByUmur(ikan *a, ikan *b);
+void fibonacciSearchExact(ikan *head, float keyHarga);
+void jumpSearchByUmur(ikan *head, int keyUmur);
+void boyerMooreSearch(ikan *head, string pattern);
+void preprocessBadChar(string pattern, vector<int> &badChar);
 
 int main()
 {
@@ -88,8 +104,7 @@ int main()
                 if (status == -1)
                 {
                     cout << "Ikan tidak ditemukan" << endl;
-                    cout << "Tekan tombol apapun untuk kembali ke menu utama" << endl;
-                    cin.get();
+                    system("pause");
                     system("cls || clear");
                 }
                 else if (status == -2)
@@ -121,7 +136,11 @@ int main()
                 break;
             case 6:
                 system("cls || clear");
-                cout << "Merge Sort Harga Ikan (ASC)";
+                cout << "Merge Sort Harga Ikan (ASC)" << endl
+                     << endl;
+                mergeSort(&linkedListIkan, compareByHarga);
+                tampilkanIkan(linkedListIkan);
+                cout << "Data ikan berhasil diurutkan secara Ascending menggunakan Merge Sort" << endl;
                 break;
             case 7:
                 system("cls || clear");
@@ -489,6 +508,7 @@ int editIkan(ikan *head)
     if (head == NULL)
     {
         cout << "Data ikan masih kosong" << endl;
+        system("pause");
         return -2;
     }
     else
@@ -582,4 +602,366 @@ int hapusIkan(ikan **head)
     *head = (*head)->next;
     delete temp;
     return 1;
+}
+
+int getLength(ikan *head)
+{
+    int length = 0;
+    while (head != nullptr)
+    {
+        length++;
+        head = head->next;
+    }
+    return length;
+}
+
+ikan *getNodeAt(ikan *head, int index)
+{
+    int counter = 0;
+    ikan *current = head;
+    while (current != nullptr && counter < index)
+    {
+        current = current->next;
+        counter++;
+    }
+    return current;
+}
+
+void shellSort(ikan **headRef, bool (*compare)(ikan *, ikan *))
+{
+    int n = getLength(*headRef);
+
+    for (int gap = n / 2; gap > 0; gap /= 2)
+    {
+
+        for (int i = gap; i < n; i++)
+        {
+
+            ikan *temp = getNodeAt(*headRef, i);
+            ikan *current = getNodeAt(*headRef, i - gap);
+
+            int j = i;
+            while (j >= gap && compare(current, temp))
+            {
+                ikan *nextCurrent = getNodeAt(*headRef, j - gap);
+
+                swap(getNodeAt(*headRef, j)->idIkan, current->idIkan);
+                swap(getNodeAt(*headRef, j)->jenisIkan, current->jenisIkan);
+                swap(getNodeAt(*headRef, j)->umurIkan, current->umurIkan);
+                swap(getNodeAt(*headRef, j)->hargaIkan, current->hargaIkan);
+
+                j -= gap;
+                if (j >= gap)
+                    current = nextCurrent;
+            }
+        }
+    }
+}
+
+bool compareByHargaDescending(ikan *a, ikan *b)
+{
+    return a->hargaIkan < b->hargaIkan;
+}
+
+bool compareByUmurDescending(ikan *a, ikan *b)
+{
+    return a->umurIkan < b->umurIkan;
+}
+
+void splitList(ikan *source, ikan **front, ikan **back)
+{
+    ikan *slow;
+    ikan *fast;
+
+    slow = source;
+    fast = source->next;
+
+    while (fast != nullptr)
+    {
+        fast = fast->next;
+        if (fast != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+    }
+
+    *front = source;
+    *back = slow->next;
+    slow->next = nullptr;
+}
+
+ikan *mergeSortedLists(ikan *list1, ikan *list2, bool (*compare)(ikan *, ikan *))
+{
+    ikan *result = nullptr;
+
+    if (list1 == nullptr)
+        return list2;
+    else if (list2 == nullptr)
+        return list1;
+
+    if (compare(list1, list2))
+    {
+        result = list1;
+        result->next = mergeSortedLists(list1->next, list2, compare);
+    }
+    else
+    {
+        result = list2;
+        result->next = mergeSortedLists(list1, list2->next, compare);
+    }
+
+    return result;
+}
+
+void mergeSort(ikan **headRef, bool (*compare)(ikan *, ikan *))
+{
+    ikan *head = *headRef;
+    ikan *list1;
+    ikan *list2;
+
+    if ((head == nullptr) || (head->next == nullptr))
+    {
+        return;
+    }
+
+    splitList(head, &list1, &list2);
+
+    mergeSort(&list1, compare);
+    mergeSort(&list2, compare);
+
+    *headRef = mergeSortedLists(list1, list2, compare);
+}
+
+bool compareByHarga(ikan *a, ikan *b)
+{
+    return a->hargaIkan <= b->hargaIkan;
+}
+
+bool compareByUmur(ikan *a, ikan *b)
+{
+    return a->umurIkan <= b->umurIkan;
+}
+
+void fibonacciSearchExact(ikan *head, float keyHarga)
+{
+    int n = getLength(head);
+
+    int fibMMm2 = 0;
+    int fibMMm1 = 1;
+    int fibM = fibMMm2 + fibMMm1;
+
+    while (fibM < n)
+    {
+        fibMMm2 = fibMMm1;
+        fibMMm1 = fibM;
+        fibM = fibMMm2 + fibMMm1;
+    }
+
+    int offset = -1;
+
+    while (fibM > 1)
+    {
+        int i = min(offset + fibMMm2, n - 1);
+        ikan *current = getNodeAt(head, i);
+
+        if (current->hargaIkan < keyHarga)
+        {
+            fibM = fibMMm1;
+            fibMMm1 = fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+            offset = i;
+        }
+        else if (current->hargaIkan > keyHarga)
+        {
+            fibM = fibMMm2;
+            fibMMm1 = fibMMm1 - fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+        }
+        else
+        {
+            cout << "\nIkan dengan harga " << keyHarga << " ditemukan:" << endl;
+
+            ikan *foundIkan = current;
+            cout << "ID: " << foundIkan->idIkan
+                 << ", Nama: " << foundIkan->jenisIkan
+                 << ", Umur: " << foundIkan->umurIkan
+                 << ", Harga: " << foundIkan->hargaIkan << endl;
+
+            int backwardIndex = i - 1;
+            while (backwardIndex >= 0)
+            {
+                ikan *previousIkan = getNodeAt(head, backwardIndex);
+                if (previousIkan->hargaIkan == keyHarga)
+                {
+                    cout << "ID: " << previousIkan->idIkan
+                         << ", Nama: " << previousIkan->jenisIkan
+                         << ", Umur: " << previousIkan->umurIkan
+                         << ", Harga: " << previousIkan->hargaIkan << endl;
+                }
+                else
+                {
+                    break;
+                }
+                backwardIndex--;
+            }
+
+            int forwardIndex = i + 1;
+            while (forwardIndex < n)
+            {
+                ikan *nextIkan = getNodeAt(head, forwardIndex);
+                if (nextIkan->hargaIkan == keyHarga)
+                {
+                    cout << "ID: " << nextIkan->idIkan
+                         << ", Nama: " << nextIkan->jenisIkan
+                         << ", Umur: " << nextIkan->umurIkan
+                         << ", Harga: " << nextIkan->hargaIkan << endl;
+                }
+                else
+                {
+                    break;
+                }
+                forwardIndex++;
+            }
+
+            return;
+        }
+    }
+
+    if (fibMMm1 && getNodeAt(head, offset + 1)->hargaIkan == keyHarga)
+    {
+        ikan *lastIkan = getNodeAt(head, offset + 1);
+        cout << "\nIkan dengan harga " << keyHarga << " ditemukan:" << endl;
+        cout << "ID: " << lastIkan->idIkan
+             << ", Nama: " << lastIkan->jenisIkan
+             << ", Umur: " << lastIkan->umurIkan
+             << ", Harga: " << lastIkan->hargaIkan << endl;
+    }
+    else
+    {
+        cout << "\nIkan dengan harga " << keyHarga << " tidak ditemukan." << endl;
+    }
+}
+
+void jumpSearchByUmur(ikan *head, int keyUmur)
+{
+    if (head == nullptr)
+    {
+        cout << "Linked List kosong." << endl;
+        return;
+    }
+
+    // Hitung panjang linked list
+    int n = getLength(head);
+    int jump = sqrt(n); // Ukuran langkah
+    int prev = 0;
+
+    ikan *current = head;
+    int i = 0;
+    unordered_set<int> foundIDs; // Set untuk menyimpan ID yang sudah ditemukan
+
+    while (current != nullptr && current->umurIkan < keyUmur)
+    {
+        prev = i;
+        for (int j = 0; j < jump && current != nullptr; j++)
+        {
+            current = current->next;
+            i++;
+        }
+    }
+
+    if (prev < n && getNodeAt(head, prev)->umurIkan == keyUmur)
+    {
+        ikan *foundIkan = getNodeAt(head, prev);
+        if (foundIDs.find(foundIkan->idIkan) == foundIDs.end())
+        {
+            cout << "Ikan dengan umur " << keyUmur << " ditemukan:" << endl;
+            foundIDs.insert(foundIkan->idIkan);
+            cout << "ID: " << foundIkan->idIkan
+                 << ", Nama: " << foundIkan->jenisIkan
+                 << ", Umur: " << foundIkan->umurIkan
+                 << ", Harga: " << foundIkan->hargaIkan << endl;
+            cout << "====================================" << endl;
+        }
+    }
+
+    if (current != nullptr && current->umurIkan == keyUmur)
+    {
+        while (current != nullptr && current->umurIkan == keyUmur)
+        {
+            if (foundIDs.find(current->idIkan) == foundIDs.end())
+            {
+                cout << "Ikan dengan umur " << keyUmur << " ditemukan:" << endl;
+                foundIDs.insert(current->idIkan);
+                cout << "ID: " << current->idIkan
+                     << ", Nama: " << current->jenisIkan
+                     << ", Umur: " << current->umurIkan
+                     << ", Harga: " << current->hargaIkan << endl;
+                cout << "====================================" << endl;
+            }
+            current = current->next;
+        }
+    }
+    else
+    {
+        cout << "Ikan dengan umur " << keyUmur << " tidak ditemukan." << endl;
+    }
+}
+
+void preprocessBadChar(string pattern, vector<int> &badChar)
+{
+    int m = pattern.size();
+    for (int i = 0; i < 256; i++)
+    {
+        badChar[i] = -1;
+    }
+    for (int i = 0; i < m; i++)
+    {
+        badChar[(int)pattern[i]] = i;
+    }
+}
+
+void boyerMooreSearch(ikan *head, string pattern)
+{
+    vector<int> badChar(256);
+    preprocessBadChar(pattern, badChar);
+
+    ikan *current = head;
+    int id = 0;
+
+    while (current != nullptr)
+    {
+        string name = current->jenisIkan;
+        int n = name.size();
+        int m = pattern.size();
+
+        int s = 0;
+        while (s <= (n - m))
+        {
+            int j = m - 1;
+
+            while (j >= 0 && pattern[j] == name[s + j])
+            {
+                j--;
+            }
+
+            if (j < 0)
+            {
+                cout << "Ikan dengan nama \"" << pattern << "\" ditemukan:" << endl;
+                cout << "ID: " << current->idIkan
+                     << ", Nama: " << current->jenisIkan
+                     << ", Umur: " << current->umurIkan
+                     << ", Harga: " << current->hargaIkan << endl;
+
+                s += (s + m < n) ? m - badChar[name[s + m]] : 1;
+            }
+            else
+            {
+                s += max(1, j - badChar[name[s + j]]);
+            }
+        }
+
+        current = current->next;
+        id++;
+    }
 }
