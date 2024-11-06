@@ -152,15 +152,40 @@ int main()
                 system("cls || clear");
                 cout << " == PROGRAM SEARCH FIBONACCI HARGA IKAN ==" << endl;
                 cout << "=========================================" << endl;
-                mergeSort(&linkedListIkan, compareByHarga);
-                keyHarga = getFloatInput("Masukkan harga ikan yang ingin dicari : ");
-                fibonacciSearchExact(linkedListIkan, keyHarga);
-                system("pause");
-                break;
+                if (linkedListIkan == NULL)
+                {
+                    cout << "Data ikan masih kosong" << endl;
+                    system("pause");
+                    system("cls || clear");
+                    break;
+                }
+                else
+                {
+                    mergeSort(&linkedListIkan, compareByHarga);
+                    keyHarga = getFloatInput("Masukkan harga ikan yang ingin dicari : ");
+                    fibonacciSearchExact(linkedListIkan, keyHarga);
+                    system("pause");
+                    break;
+                }
             case 9:
                 system("cls || clear");
-                cout << "Search Jump (Umur Ikan)";
-                break;
+                cout << " == PROGRAM SEARCH JUMP UMUR IKAN ==" << endl;
+                cout << "=========================================" << endl;
+                if (linkedListIkan == NULL)
+                {
+                    cout << "Data ikan masih kosong" << endl;
+                    system("pause");
+                    system("cls || clear");
+                    break;
+                }
+                else
+                {
+                    mergeSort(&linkedListIkan, compareByUmur);
+                    keyUmur = getIntInput("Masukkan umur ikan yang ingin dicari : ");
+                    jumpSearchByUmur(linkedListIkan, keyUmur);
+                    system("pause");
+                    break;
+                }
             case 10:
                 system("cls || clear");
                 cout << "Search Boyer-Moore (Nama Ikan)";
