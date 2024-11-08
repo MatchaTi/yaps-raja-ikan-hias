@@ -56,8 +56,37 @@ void fibonacciSearchExact(ikan *head, float keyHarga);
 void jumpSearchByUmur(ikan *head, int keyUmur);
 void boyerMooreSearch(ikan *head, string pattern);
 void preprocessBadChar(string pattern, vector<int> &badChar);
+void login();
+void menu();
 
-int main()
+int main(){
+    login();
+    return 0;
+}
+
+void login(){
+    string username, password;
+    for(int i = 0; i < 3; i++){
+        cout << "Username: ";
+        cin >> username;
+        cout << "Password: ";
+        cin >> password;
+        if (username == "admin" && password == "admin"){
+            menu();
+            break;
+        }
+        else{
+            system("cls || clear");
+            cout << "Username atau password salah!" << endl;
+            if(i == 2){
+                cout << "Anda telah mencapai batas maksimal percobaan!" << endl;
+                exit(0);
+            }
+        }
+    }
+}
+
+void menu()
 {
     system("cls || clear");
     ikan *linkedListIkan = nullptr;
@@ -229,8 +258,7 @@ int main()
         displayGambarIkan();
         displayMenu(Set, menuCount);
     }
-
-    return 0;
+    return ;
 }
 
 void color(int color)
