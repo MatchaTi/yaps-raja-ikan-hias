@@ -44,8 +44,37 @@ void fibonacciSearchExact(ikan *head, float keyHarga);
 void jumpSearchByUmur(ikan *head, int keyUmur);
 void boyerMooreSearch(ikan *head, string pattern);
 void preprocessBadChar(string pattern, vector<int> &badChar);
+void menu();
+void login();
 
-int main()
+int main(){
+    login();
+    return 0;
+}
+
+void login(){
+    string username, password;
+    for(int i = 0; i < 3; i++){
+        cout << "Username: ";
+        cin >> username;
+        cout << "Password: ";
+        cin >> password;
+        if (username == "admin" && password == "admin"){
+            menu();
+            break;
+        }
+        else{
+            system("cls || clear");
+            cout << "Username atau password salah!" << endl;
+            if(i == 2){
+                cout << "Anda telah mencapai batas maksimal percobaan!" << endl;
+                exit(0);
+            }
+        }
+    }
+}
+
+void menu()
 {
     system("cls || clear");
     ikan *linkedListIkan = NULL;
@@ -179,13 +208,13 @@ int main()
             break;
         case 10:
             cout << " == PROGRAM MANAGEMENT YAPS RAJA IKAN HIAS BERAKHIR == " << endl;
-            return 0;
+            return;
         default:
             cout << "Menu tidak tersedia" << endl;
             break;
         }
     } while (pilihan != 10);
-    return 0;
+    return;
 }
 
 float getFloatInput(const string &prompt)
@@ -938,7 +967,6 @@ void boyerMooreSearch(ikan *head, string pattern)
                 s += max(1, j - badChar[name[s + j]]);
             }
         }
-
         current = current->next;
         id++;
     }
