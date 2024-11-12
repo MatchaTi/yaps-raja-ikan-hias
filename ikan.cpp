@@ -58,27 +58,39 @@ void boyerMooreSearch(ikan *head, string pattern);
 void preprocessBadChar(string pattern, vector<int> &badChar);
 void login();
 void menu();
+void enqueueTambahKaryawan(karayawan **head, karayawan **tail);
+void displayKaryawanEnequque(karayawan *head);
+int PecatKaryawan(karayawan **head);
+void displayFrontKaryawan(karayawan *head);
+void displayRearKaryawan(karayawan *tail);
+void TampilkanKaryawan(karayawan *head, karayawan *tail);
 
-int main(){
+int main()
+{
     login();
     return 0;
 }
 
-void login(){
+void login()
+{
     string username, password;
-    for(int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++)
+    {
         cout << "Username: ";
         cin >> username;
         cout << "Password: ";
         cin >> password;
-        if (username == "admin" && password == "admin"){
+        if (username == "admin" && password == "admin")
+        {
             menu();
             break;
         }
-        else{
+        else
+        {
             system("cls || clear");
             cout << "Username atau password salah!" << endl;
-            if(i == 2){
+            if (i == 2)
+            {
                 cout << "Anda telah mencapai batas maksimal percobaan!" << endl;
                 exit(0);
             }
@@ -90,6 +102,8 @@ void menu()
 {
     system("cls || clear");
     ikan *linkedListIkan = nullptr;
+    karayawan *linkedListKarayawan = nullptr;
+    karayawan *linkedListKarayawanTail = nullptr;
     int status;
     int pilihan;
     float keyHarga;
@@ -165,15 +179,20 @@ void menu()
                 break;
             case 4:
                 system("cls || clear");
-                cout << "Tambah Karyawan";
+                enqueueTambahKaryawan(&linkedListKarayawan, &linkedListKarayawanTail);
                 break;
             case 5:
                 system("cls || clear");
-                cout << "Lihat Karyawan";
+                TampilkanKaryawan(linkedListKarayawan, linkedListKarayawanTail);
                 break;
             case 6:
                 system("cls || clear");
-                cout << "Pecat Karyawan";
+                status = PecatKaryawan(&linkedListKarayawan);
+                if (status == 1)
+                {
+                    cout << "Karayawan berhasil dipecat (Mode Queue - Dequeue)." << endl;
+                }
+                system("pause");
                 break;
             case 7:
                 system("cls || clear");
@@ -258,7 +277,7 @@ void menu()
         displayGambarIkan();
         displayMenu(Set, menuCount);
     }
-    return ;
+    return;
 }
 
 void color(int color)
@@ -712,6 +731,185 @@ ikan *getNodeAt(ikan *head, int index)
         counter++;
     }
     return current;
+}
+
+void enqueueTambahKaryawan(karayawan **head, karayawan **tail)
+{
+    karayawan *nodeKarayawan = new karayawan;
+    cout << "           == Tambah Karayawan ==" << endl;
+    cout << "=========================================" << endl;
+    while (true)
+    {
+        nodeKarayawan->idKarayawan = getIntInput("ID Karayawan \t\t: ");
+        bool isUnique = true;
+        karayawan *current = *head;
+        while (current != NULL)
+        {
+            if (current->idKarayawan == nodeKarayawan->idKarayawan)
+            {
+                isUnique = false;
+                break;
+            }
+            current = current->next;
+        }
+
+        if (isUnique)
+        {
+            break;
+        }
+        else
+        {
+            cout << "ID Karayawan sudah ada. Silakan masukkan ID yang berbeda." << endl;
+        }
+    }
+    nodeKarayawan->namaKarayawan = getStringInput("Nama Karayawan \t: ");
+    nodeKarayawan->umurKarayawan = getIntInput("Umur Karayawan \t: ");
+    nodeKarayawan->next = NULL;
+
+    if (*head == nullptr)
+    {
+        *head = nodeKarayawan;
+        *tail = nodeKarayawan;
+    }
+    else
+    {
+        (*tail)->next = nodeKarayawan;
+        *tail = nodeKarayawan;
+    }
+
+    system("cls || clear");
+    cout << "Karayawan berhasil ditambahkan." << endl;
+}
+
+void displayKaryawanEnequque(karayawan *head)
+{
+    karayawan *current = head;
+
+    gotoxy(0, 0);
+    cout << "ID\tNama\tUmur\n";
+    cout << "-------------------------------------\n";
+
+    while (current != nullptr)
+    {
+        cout << current->idKarayawan << "\t" << current->namaKarayawan << "\t" << current->umurKarayawan << "\n";
+        current = current->next;
+    }
+
+    system("pause");
+}
+
+void displayFrontKaryawan(karayawan *head)
+{
+    if (head == NULL)
+    {
+        cout << "Data karayawan masih kosong" << endl;
+    }
+    gotoxy(0, 0);
+
+    cout << "ID\tNama\tUmur\n";
+    cout << "-------------------------------------\n";
+
+    cout << head->idKarayawan << "\t" << head->namaKarayawan << "\t" << head->umurKarayawan << "\n";
+    system("pause");
+}
+
+void displayRearKaryawan(karayawan *tail)
+{
+    if (tail == NULL)
+    {
+        cout << "Data karayawan masih kosong" << endl;
+    }
+
+    gotoxy(0, 0);
+    cout << "ID\tNama\tUmur\n";
+    cout << "-------------------------------------\n";
+
+    cout << tail->idKarayawan << "\t" << tail->namaKarayawan << "\t" << tail->umurKarayawan << "\n";
+    system("pause");
+}
+
+void TampilkanKaryawan(karayawan *head, karayawan *tail)
+{
+    int selectedIndex = 0;
+    char key;
+
+    cout << "           == Tampilkan Karyawan ==" << endl;
+    cout << "====================================\n"
+         << endl;
+
+    if (head == NULL)
+    {
+        cout << "Data karayawan masih kosong" << endl;
+        system("pause");
+        system("cls || clear");
+        return;
+    }
+
+    while (true)
+    {
+        gotoxy(0, 4);
+        color(selectedIndex == 0 ? 12 : 7);
+        cout << "1. Semua Karayawan" << endl;
+
+        gotoxy(0, 5);
+        color(selectedIndex == 1 ? 12 : 7);
+        cout << "2. Front Karayawan" << endl;
+
+        gotoxy(0, 6);
+        color(selectedIndex == 2 ? 12 : 7);
+        cout << "3. Rear Karayawan" << endl;
+
+        gotoxy(0, 7);
+        color(selectedIndex == 3 ? 12 : 7);
+        cout << "4. Kembali ke Menu Utama" << endl;
+
+        key = _getch();
+
+        if (key == 72 && selectedIndex > 0)
+        {
+            selectedIndex--;
+        }
+        else if (key == 80 && selectedIndex < 3)
+        {
+            selectedIndex++;
+        }
+        else if (key == '\r')
+        {
+            system("cls || clear");
+            if (selectedIndex == 0)
+            {
+                displayKaryawanEnequque(head);
+            }
+            else if (selectedIndex == 1)
+            {
+                displayFrontKaryawan(head);
+            }
+            else if (selectedIndex == 2)
+            {
+                displayRearKaryawan(tail);
+            }
+            else if (selectedIndex == 3)
+            {
+                break;
+            }
+            system("cls || clear");
+        }
+    }
+}
+int PecatKaryawan(karayawan **head)
+{
+    karayawan *temp = *head;
+    karayawan *prev = NULL;
+
+    if (*head == NULL)
+    {
+        cout << "Data karayawan masih kosong cuy" << endl;
+        return -1;
+    }
+
+    *head = (*head)->next;
+    delete temp;
+    return 1;
 }
 
 void shellSort(ikan **headRef, bool (*compare)(ikan *, ikan *))
