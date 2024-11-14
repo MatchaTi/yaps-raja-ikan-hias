@@ -76,6 +76,7 @@ void login()
     string username, password;
     for (int i = 0; i < 3; i++)
     {
+        cout << "Selamat datang di Aplikasi Manajemen Ikan Hias YAPS!" << endl;
         cout << "Username: ";
         cin >> username;
         cout << "Password: ";
@@ -91,7 +92,7 @@ void login()
             cout << "Username atau password salah!" << endl;
             if (i == 2)
             {
-                cout << "Anda telah mencapai batas maksimal percobaan!" << endl;
+                cout << "Anda telah mencapai batas maksimal percobaan! Sampai Jumpa" << endl;
                 exit(0);
             }
         }
