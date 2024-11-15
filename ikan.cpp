@@ -15,7 +15,6 @@ struct ikan
     string jenisIkan;
     int umurIkan;
     int hargaIkan;
-    string pakanIkan;
     ikan *next;
 };
 
@@ -67,6 +66,7 @@ void TampilkanKaryawan(karayawan *head, karayawan *tail);
 
 int main()
 {
+    system("cls || clear");
     login();
     return 0;
 }
@@ -76,6 +76,7 @@ void login()
     string username, password;
     for (int i = 0; i < 3; i++)
     {
+        cout << "Selamat datang di Aplikasi Manajemen Ikan Hias YAPS!" << endl;
         cout << "Username: ";
         cin >> username;
         cout << "Password: ";
@@ -91,7 +92,7 @@ void login()
             cout << "Username atau password salah!" << endl;
             if (i == 2)
             {
-                cout << "Anda telah mencapai batas maksimal percobaan!" << endl;
+                cout << "Anda telah mencapai batas maksimal percobaan! Sampai Jumpa" << endl;
                 exit(0);
             }
         }
@@ -496,7 +497,7 @@ void tampilkanIkan(ikan *head)
                     system("cls || clear");
                     gotoxy(0, 0);
 
-                    cout << "ID\tJenis\tUmur\tHarga\tPakan\n";
+                    cout << "ID\tJenis\tUmur\tHarga\n";
                     cout << "-------------------------------------\n";
 
                     temp = head;
@@ -630,7 +631,7 @@ int editIkan(ikan *head)
             cout << "====================================" << endl;
             gotoxy(0, 2);
 
-            cout << "ID\tJenis\tUmur\tHarga\tPakan\n";
+            cout << "ID\tJenis\tUmur\tHarga\n";
             cout << "-------------------------------------\n";
 
             temp = head;
@@ -762,8 +763,8 @@ void enqueueTambahKaryawan(karayawan **head, karayawan **tail)
             cout << "ID Karayawan sudah ada. Silakan masukkan ID yang berbeda." << endl;
         }
     }
-    nodeKarayawan->namaKarayawan = getStringInput("Nama Karayawan \t: ");
-    nodeKarayawan->umurKarayawan = getIntInput("Umur Karayawan \t: ");
+    nodeKarayawan->namaKarayawan = getStringInput("Nama Karayawan \t\t: ");
+    nodeKarayawan->umurKarayawan = getIntInput("Umur Karayawan \t\t: ");
     nodeKarayawan->next = NULL;
 
     if (*head == nullptr)
