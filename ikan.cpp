@@ -1251,7 +1251,6 @@ void boyerMooreSearch(ikan *head, string pattern)
                 cout << "Harga Ikan \t: Rp. " << fixed << setprecision(2) << current->hargaIkan << endl;
                 cout << "====================================" << endl;
                 s += (s + m < n) ? m - badChar[name[s + m]] : 1;
-                return;
             }
             else
             {
